@@ -2,50 +2,62 @@
 class Producto:
   def __init__(self,nombre,precio,cantidad):
     while True:
-      if not nombre:
-        print('Escriba un nombre de producto')
-      else:
-        self.nombre = nombre
+      try:
+        self.nombre = str(nombre)
         break
+      except (NameError, TypeError):
+        print("Nombre inválido")
     while True:
-      if precio<0:
-        print('El precio no puede ser negativo')
-      else:
-        self.precio = precio
-        break
+      try:
+        if precio<=0:
+          print('El precio no puede ser negativo o nulo')
+        else:
+          self.precio = float(precio)
+          break
+      except (ValueError, TypeError):
+        print("Precio inválido")
     while True:
-      if cantidad<0:
-        print('La cantidado no puede ser negativa')
-      else:
-        self.cantidad = cantidad
-        break
+      try:
+        if cantidad<=0:
+          print('La cantidad no puede ser negativa o nula')
+        else:
+          self.cantidad = int(cantidad)
+          break
+      except (ValueError, TypeError):
+        print("Cantidad inválida")
   
   def __str__(self):
     return f"Producto: {self.nombre}. Precio: {self.precio}. Cantidad: {self.cantidad}"
   
   def actualizar_precio(self, nuevo_precio):
     while True:
-      if nuevo_precio<0:
-        print('El precio no puede ser negativo')
-      else:
-        self.precio = nuevo_precio
-        break
+      try:
+        if nuevo_precio<=0:
+          print('El precio no puede ser negativo o nulo')
+        else:
+          self.precio = nuevo_precio
+          break
+      except (ValueError, TypeError):
+        print("Precio inválido")
   
   def actualizar_cantidad(self, nueva_cantidad):
     while True:
-      if nueva_cantidad<0:
-        print('La cantidado no puede ser negativa')
-      else:
-        self.cantidad = nueva_cantidad
-        break
+      try:
+        if nueva_cantidad<=0:
+          print('La cantidad no puede ser negativa o nula')
+        else:
+          self.cantidad = nueva_cantidad
+          break
+      except (ValueError, TypeError):
+        print("Cantidad inválida")
   
   def calcular_valor_total(self):
-    valor = precio*cantidad
+    valor = self.precio*self.cantidad
     return valor
   
 class Inventario:
   def __init__(self):
-    lista_productos = []
+    self.lista_productos = []
 
   def agregar_producto(self, producto):
     self.lista_productos.append(producto)
@@ -53,9 +65,9 @@ class Inventario:
   def buscar_producto(self, nombre):
     nombre_productos = [producto.nombre for producto in self.lista_productos]
     if nombre in nombre_productos:
-      return True
+      return f"Producto encontrado"
     else:
-      return False
+      return f"Producto no encontrado"
 
   def calcular_valor_inventario(self):
     valor_productos = [producto.calcular_valor_total() for producto in self.lista_productos]
